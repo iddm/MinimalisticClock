@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>283</width>
-    <height>88</height>
+    <height>120</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -51,7 +51,53 @@
       </widget>
      </item>
     </layout>
-   </item>  
+   </item>     
+   
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Time font size:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="kcfg_timeStringFontSize"/>
+     </item>
+    </layout>
+   </item>   
+   
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>AM/PM font size:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="kcfg_ampmStringFontSize"/>
+     </item>
+    </layout>
+   </item>   
+   
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Date font size:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="kcfg_dateStringFontSize"/>
+     </item>
+    </layout>
+   </item>   
+   
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -89,7 +135,12 @@
    <class>KColorCombo</class>
    <extends>QComboBox</extends>
    <header>kcolorcombo.h</header>
-  </customwidget>
+  </customwidget>  
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>  
   <customwidget>
    <class>KCheckBox</class>
    <extends>QCheckBox</extends>

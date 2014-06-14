@@ -34,14 +34,20 @@ Item {
     property bool fullTimeFormat
     property bool showSeconds
     property string timeString
+    property int timeStringFontSize: 72
+    property int ampmStringFontSize: 48
+    property int dateStringFontSize: 32
+    property double defaultHalfTimeSuffixOpacity: 0.5
     
-    Component.onCompleted: {        
-        showTimeFormat = "hh:mm"
-        
+    Component.onCompleted: {                
         plasmoid.setBackgroundHints( 0 )
         plasmoid.addEventListener( 'ConfigChanged', configChanged );
         textColor = plasmoid.readConfig( "textColor" )
         textFont = plasmoid.readConfig( "textFont" )   
+        
+        timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
+        ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
+        dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
         
         setShowSeconds()
         setTimeFormat()
@@ -51,6 +57,10 @@ Item {
     {
         textColor = plasmoid.readConfig( "textColor" )
         textFont = plasmoid.readConfig( "textFont" )
+        
+        timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
+        ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
+        dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
         
         setShowSeconds()
         setTimeFormat()
@@ -84,7 +94,7 @@ Item {
             
         } else {
             format += "ap";
-            ampm.opacity = 0.5;      
+            ampm.opacity = defaultHalfTimeSuffixOpacity;      
             
             timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format )).toString().slice(0, -2)
         }      
@@ -96,7 +106,7 @@ Item {
         font.family:textFont
         font.bold: true
         color: textColor
-        font.pointSize: 72
+        font.pointSize: timeStringFontSize
         text : timeString
         anchors {
             top: parent.top;
@@ -107,9 +117,9 @@ Item {
     Text {
         id: ampm
         font.family:textFont
-        opacity: 0.5
+        opacity: defaultHalfTimeSuffixOpacity
         color: textColor
-        font.pointSize: 48
+        font.pointSize: ampmStringFontSize
         text : Qt.formatTime( dataSource.data["Local"]["Time"],"ap" )
         anchors {
             top: parent.top;
@@ -122,7 +132,7 @@ Item {
         id: date
         font.family:textFont
         color: textColor
-        font.pointSize: 32
+        font.pointSize: dateStringFontSize
         text : Qt.formatDate( dataSource.data["Local"]["Date"],"dddd, d MMMM" )
         anchors {
             top: time.bottom;

@@ -21,5 +21,17 @@
             <label>Show seconds</label>
             <default>false</default>
         </entry>
+        <entry name="timeStringFontSize" type="int">
+            <label>Time string font size</label>
+            <default>72</default>
+        </entry>
+        <entry name="ampmStringFontSize" type="int">
+            <label>AM/PM suffix font size</label>
+            <default>48</default>
+        </entry>
+        <entry name="dateStringFontSize" type="int">
+            <label>Date string font size</label>
+            <default>32</default>
+        </entry>
     </group>
 </kcfg>
