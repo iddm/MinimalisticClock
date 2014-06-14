@@ -31,7 +31,7 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item>       
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="label_2">
@@ -51,7 +51,37 @@
       </widget>
      </item>
     </layout>
-   </item>
+   </item>  
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>24h format</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KCheckBox" name="kcfg_timeFormat"/>
+     </item>
+    </layout>
+   </item>   
+   
+    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Show seconds</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KCheckBox" name="kcfg_showSeconds"/>
+     </item>
+    </layout>
+   </item>       
+   
   </layout>
  </widget>
  <customwidgets>
@@ -59,6 +89,11 @@
    <class>KColorCombo</class>
    <extends>QComboBox</extends>
    <header>kcolorcombo.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>kcheckbox.h</header>
   </customwidget>
   <customwidget>
    <class>KFontComboBox</class>

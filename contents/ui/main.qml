@@ -22,7 +22,6 @@ import QtQuick 1.1
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
-import org.kde.locale 0.1
 
 
 Item {
@@ -32,38 +31,73 @@ Item {
     property int minimumWidth: 260
     property string textColor
     property string textFont
+    property bool fullTimeFormat
+    property bool showSeconds
+    property string timeString
     
-    Component.onCompleted: {
+    Component.onCompleted: {        
+        showTimeFormat = "hh:mm"
+        
         plasmoid.setBackgroundHints( 0 )
         plasmoid.addEventListener( 'ConfigChanged', configChanged );
         textColor = plasmoid.readConfig( "textColor" )
-        textFont = plasmoid.readConfig( "textFont" )        
+        textFont = plasmoid.readConfig( "textFont" )   
+        
+        setShowSeconds()
+        setTimeFormat()
     }
     
     function configChanged()
-    {   
+    {
         textColor = plasmoid.readConfig( "textColor" )
         textFont = plasmoid.readConfig( "textFont" )
+        
+        setShowSeconds()
+        setTimeFormat()
     }
     
+    function setShowSeconds()
+    {        
+        showSeconds = plasmoid.readConfig( "showSeconds" )
+        
+        updateTime()
+    }
+
     function setTimeFormat()
     {
-        timeFormat = plasmoid.readConfig( "timeFormat" )
-        if( timeFormat == 12 ){
-            timeString = (Qt.formatTime( dataSource.data["Local"]["Time"],"h:mmap" )).toString().slice(0,-2)
-        }
-        else
-            timeString = (Qt.formatTime( dataSource.data["Local"]["Time"],"hh:mm" ))
-            
+        fullTimeFormat = plasmoid.readConfig( "timeFormat" )
+        
+        updateTime()
     }
-  
+    
+    function updateTime()
+    {    
+        var format = "hh:mm"
+        
+        if (showSeconds) {
+            format += ":ss"                  
+        }
+        
+        if (fullTimeFormat) {
+            timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format ))
+            ampm.opacity = 0;
+            
+        } else {
+            format += "ap";
+            ampm.opacity = 0.5;      
+            
+            timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format )).toString().slice(0, -2)
+        }      
+        
+    }
+
     Text {
         id: time
         font.family:textFont
         font.bold: true
         color: textColor
         font.pointSize: 72
-        text : (Qt.formatTime( dataSource.data["Local"]["Time"],"h:mmap" )).toString().slice(0,-2)
+        text : timeString
         anchors {
             top: parent.top;
             left: parent.left;
@@ -89,21 +123,21 @@ Item {
         font.family:textFont
         color: textColor
         font.pointSize: 32
-        text : Qt.formatDate( dataSource.data["Local"]["Date"],"dddd, MMM d" )
+        text : Qt.formatDate( dataSource.data["Local"]["Date"],"dddd, d MMMM" )
         anchors {
             top: time.bottom;
             left: parent.left;
         }
     }
-    
+
     PlasmaCore.DataSource {
         id: dataSource
         engine: "time"
         connectedSources: ["Local"]
         interval: 500
+        
+        onNewData: {
+            updateTime()
+        }
     }
-    
-    Locale {
-        id: locale
-    }    
 }
