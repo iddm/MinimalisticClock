@@ -31,6 +31,7 @@ Item {
     property int minimumWidth: 260
     property string textColor
     property string textFont
+    property string dateStringFormat: "dddd, d MMMM"
     property bool fullTimeFormat
     property bool showSeconds
     property string timeString
@@ -48,6 +49,7 @@ Item {
         timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
         ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
         dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
+        dateStringFormat = plasmoid.readConfig( "dateStringFormat" )   
         
         setShowSeconds()
         setTimeFormat()
@@ -61,6 +63,7 @@ Item {
         timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
         ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
         dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
+        dateStringFormat = plasmoid.readConfig( "dateStringFormat" )   
         
         setShowSeconds()
         setTimeFormat()
@@ -133,7 +136,7 @@ Item {
         font.family:textFont
         color: textColor
         font.pointSize: dateStringFontSize
-        text : Qt.formatDate( dataSource.data["Local"]["Date"],"dddd, d MMMM" )
+        text : Qt.formatDate( dataSource.data["Local"]["Date"], dateStringFormat )
         anchors {
             top: time.bottom;
             left: parent.left;

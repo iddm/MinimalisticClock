@@ -33,5 +33,9 @@
             <label>Date string font size</label>
             <default>32</default>
         </entry>
+        <entry name="dateStringFormat" type="string">
+            <label>Date string format</label>
+            <default>dddd, d MMMM</default>
+        </entry>
     </group>
 </kcfg>
