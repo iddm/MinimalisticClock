@@ -63,8 +63,8 @@ Item {
         fontStyleName = plasmoid.readConfig( "fontStyleName" ) 
         fontStyleColor = plasmoid.readConfig( "fontStyleColor" ) 
         
-        updateTextAlignment()
         updateTimeFormat()
+        updateTextAlignment()
     }
     
     function updateTextAlignment()
@@ -87,8 +87,14 @@ Item {
             time.anchors.left = undefined
             time.anchors.right = undefined
             time.anchors.horizontalCenter = time.parent.horizontalCenter
-            time.anchors.horizontalCenterOffset = -ampm.paintedWidth / 2
-            time.anchors.rightMargin = 0
+            
+            if (!fullTimeFormat) {
+                time.anchors.horizontalCenterOffset = -ampm.paintedWidth / 2
+                time.anchors.rightMargin = 0
+            } else {                
+                time.anchors.horizontalCenterOffset = 0
+                time.anchors.rightMargin = 0
+            }
             
             ampm.anchors.left = time.right
         } else {
@@ -97,7 +103,14 @@ Item {
             time.anchors.horizontalCenter = undefined
             time.anchors.left = undefined
             time.anchors.horizontalCenterOffset = 0
-            time.anchors.rightMargin = ampm.paintedWidth
+            
+            if (!fullTimeFormat) {
+                time.anchors.rightMargin = ampm.paintedWidth
+            } else {                
+                time.anchors.horizontalCenterOffset = 0
+                time.anchors.rightMargin = 0
+            }
+            
             time.anchors.right = time.parent.right
             
             ampm.anchors.left = time.right
