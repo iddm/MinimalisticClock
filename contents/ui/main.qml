@@ -31,53 +31,82 @@ Item {
     property int minimumWidth: 260
     property string textColor
     property string textFont
-    property string dateStringFormat: "dddd, d MMMM"
-    property bool fullTimeFormat
-    property bool showSeconds
+    property string defaultDateStringFormat: "dddd, d MMMM"
+    /*readonly*/ property string dateStringFormat: defaultDateStringFormat
+    property bool fullTimeFormat: true
+    property bool showSeconds: false
     property string timeString
     property int timeStringFontSize: 72
     property int ampmStringFontSize: 48
     property int dateStringFontSize: 32
     property double defaultHalfTimeSuffixOpacity: 0.5
+    property int fontStyleName: 0
+    property string fontStyleColor: "black"
+    property string textAlignment: "AlignHCenter"
     
     Component.onCompleted: {                
         plasmoid.setBackgroundHints( 0 )
         plasmoid.addEventListener( 'ConfigChanged', configChanged );
-        textColor = plasmoid.readConfig( "textColor" )
-        textFont = plasmoid.readConfig( "textFont" )   
-        
-        timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
-        ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
-        dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
-        dateStringFormat = plasmoid.readConfig( "dateStringFormat" )   
-        
-        setShowSeconds()
-        setTimeFormat()
+                
+        configChanged()
     }
     
     function configChanged()
-    {
+    { 
         textColor = plasmoid.readConfig( "textColor" )
         textFont = plasmoid.readConfig( "textFont" )
         
         timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
         ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
         dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
-        dateStringFormat = plasmoid.readConfig( "dateStringFormat" )   
+        dateStringFormat = plasmoid.readConfig( "dateStringFormat" )  
+        fontStyleName = plasmoid.readConfig( "fontStyleName" ) 
+        fontStyleColor = plasmoid.readConfig( "fontStyleColor" ) 
         
-        setShowSeconds()
-        setTimeFormat()
+        updateTextAlignment()
+        updateTimeFormat()
     }
     
-    function setShowSeconds()
+    function updateTextAlignment()
+    {    
+        var selectedTextAlignment = plasmoid.readConfig( "textAlignment" ) 
+        
+        if (selectedTextAlignment == 0) {
+            textAlignment = "AlignLeft"
+            
+            time.anchors.horizontalCenter = undefined
+            time.anchors.right = undefined
+            time.anchors.horizontalCenterOffset = 0
+            time.anchors.rightMargin = 0
+            time.anchors.left = time.parent.left;
+            
+            ampm.anchors.left = time.right
+        } else if (selectedTextAlignment == 1) {
+            textAlignment = "AlignHCenter"
+            
+            time.anchors.left = undefined
+            time.anchors.right = undefined
+            time.anchors.horizontalCenter = time.parent.horizontalCenter
+            time.anchors.horizontalCenterOffset = -ampm.paintedWidth / 2
+            time.anchors.rightMargin = 0
+            
+            ampm.anchors.left = time.right
+        } else {
+            textAlignment = "AlignRight"
+            
+            time.anchors.horizontalCenter = undefined
+            time.anchors.left = undefined
+            time.anchors.horizontalCenterOffset = 0
+            time.anchors.rightMargin = ampm.paintedWidth
+            time.anchors.right = time.parent.right
+            
+            ampm.anchors.left = time.right
+        }        
+    }
+    
+    function updateTimeFormat()
     {        
         showSeconds = plasmoid.readConfig( "showSeconds" )
-        
-        updateTime()
-    }
-
-    function setTimeFormat()
-    {
         fullTimeFormat = plasmoid.readConfig( "timeFormat" )
         
         updateTime()
@@ -100,10 +129,9 @@ Item {
             ampm.opacity = defaultHalfTimeSuffixOpacity;      
             
             timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format )).toString().slice(0, -2)
-        }      
-        
+        }           
     }
-
+            
     Text {
         id: time
         font.family:textFont
@@ -111,11 +139,12 @@ Item {
         color: textColor
         font.pointSize: timeStringFontSize
         text : timeString
+        style: fontStyleName
+        styleColor: fontStyleColor
         anchors {
             top: parent.top;
-            left: parent.left;
         }
-    }
+    }    
     
     Text {
         id: ampm
@@ -124,22 +153,30 @@ Item {
         color: textColor
         font.pointSize: ampmStringFontSize
         text : Qt.formatTime( dataSource.data["Local"]["Time"],"ap" )
+        style: fontStyleName
+        styleColor: fontStyleColor
+        horizontalAlignment: textAlignment
         anchors {
             top: parent.top;
-            left: time.right;
         }
-    }
-
-
+    }  
+        
     Text {
         id: date
         font.family:textFont
         color: textColor
         font.pointSize: dateStringFontSize
         text : Qt.formatDate( dataSource.data["Local"]["Date"], dateStringFormat )
+        style: fontStyleName
+        styleColor: fontStyleColor
+        horizontalAlignment: textAlignment
+        textFormat: Text.RichText
+        
+        wrapMode: Text.WordWrap
         anchors {
             top: time.bottom;
             left: parent.left;
+            right: parent.right;
         }
     }
 

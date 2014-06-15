@@ -37,5 +37,21 @@
             <label>Date string format</label>
             <default>dddd, d MMMM</default>
         </entry>
+        <entry name="splitDateByNewLine" type="bool">
+            <label>Split date by new line</label>
+            <default>false</default>
+        </entry>
+        <entry name="fontStyleName" type="int">
+            <label>Text style name</label>
+            <default>0</default>
+        </entry>
+        <entry name="fontStyleColor" type="string">
+            <label>Text style color</label>
+            <default>black</default>
+        </entry>
+        <entry name="textAlignment" type="int">
+            <label>Text alignment</label>
+            <default>0</default>
+        </entry>
     </group>
 </kcfg>
