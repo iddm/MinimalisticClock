@@ -4,6 +4,56 @@
      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
     <kcfgfile name=""/>
+    <group name="newgr">
+        <entry name="textFont" type="String">
+            <label>Font</label>
+            <default>Arial</default>
+        </entry>
+        <entry name="textColor" type="String">
+            <label>Text color</label>
+            <default>white</default>
+        </entry>
+        <entry name="timeFormat" type="bool">
+            <label>24h format</label>
+            <default>true</default>
+        </entry>
+        <entry name="showSeconds" type="bool">
+            <label>Show seconds</label>
+            <default>false</default>
+        </entry>
+        <entry name="timeStringFontSize" type="int">
+            <label>Time string font size</label>
+            <default>72</default>
+        </entry>
+        <entry name="ampmStringFontSize" type="int">
+            <label>AM/PM suffix font size</label>
+            <default>48</default>
+        </entry>
+        <entry name="dateStringFontSize" type="int">
+            <label>Date string font size</label>
+            <default>32</default>
+        </entry>
+        <entry name="dateStringFormat" type="string">
+            <label>Date string format</label>
+            <default>dddd, d MMMM</default>
+        </entry>
+        <entry name="splitDateByNewLine" type="bool">
+            <label>Split date by new line</label>
+            <default>false</default>
+        </entry>
+        <entry name="fontStyleName" type="int">
+            <label>Text style name</label>
+            <default>0</default>
+        </entry>
+        <entry name="fontStyleColor" type="string">
+            <label>Text style color</label>
+            <default>black</default>
+        </entry>
+        <entry name="textAlignment" type="int">
+            <label>Text alignment</label>
+            <default>0</default>
+        </entry>
+    </group>
     <group name="General">
         <entry name="textFont" type="String">
             <label>Font</label>
@@ -52,6 +102,12 @@
         <entry name="textAlignment" type="int">
             <label>Text alignment</label>
             <default>0</default>
+        </entry>
+    </group>
+    <group name="Group 1">
+        <entry name="keySuper" type="string">
+            <label>ff</label>
+            <default>dd</default>
         </entry>
     </group>
 </kcfg>

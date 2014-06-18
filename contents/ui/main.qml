@@ -23,6 +23,8 @@ import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+// import "../code/view.js" as MinimalisticClockView
+
 
 Item {
 
@@ -31,8 +33,8 @@ Item {
     property int minimumWidth: 260
     property string textColor
     property string textFont
-    property string defaultDateStringFormat: "dddd, d MMMM"
-    /*readonly*/ property string dateStringFormat: defaultDateStringFormat
+    /*readonly*/ property string defaultDateStringFormat: "dddd, d MMMM"
+    property string dateStringFormat: defaultDateStringFormat
     property bool fullTimeFormat: true
     property bool showSeconds: false
     property string timeString
@@ -43,16 +45,16 @@ Item {
     property int fontStyleName: 0
     property string fontStyleColor: "black"
     property string textAlignment: "AlignHCenter"
-    
-    Component.onCompleted: {                
-        plasmoid.setBackgroundHints( 0 )
-        plasmoid.addEventListener( 'ConfigChanged', configChanged );
-                
-        configChanged()
+    property variant view: MinimalisticClockView.MinimalisticClockView(mainWindow)
+          
+    Component.onCompleted: {    
+        plasmoid.setBackgroundHints( 0 );
+        plasmoid.addEventListener( 'ConfigChanged', configChanged ); 
+            
+        configChanged();
     }
     
-    function configChanged()
-    { 
+    function configChanged() {    
         textColor = plasmoid.readConfig( "textColor" )
         textFont = plasmoid.readConfig( "textFont" )
         
@@ -67,8 +69,7 @@ Item {
         updateTextAlignment()
     }
     
-    function updateTextAlignment()
-    {    
+    function updateTextAlignment() {
         var selectedTextAlignment = plasmoid.readConfig( "textAlignment" ) 
         
         if (selectedTextAlignment == 0) {
@@ -114,19 +115,17 @@ Item {
             time.anchors.right = time.parent.right
             
             ampm.anchors.left = time.right
-        }        
+        }      
     }
     
-    function updateTimeFormat()
-    {        
+    function updateTimeFormat() {
         showSeconds = plasmoid.readConfig( "showSeconds" )
         fullTimeFormat = plasmoid.readConfig( "timeFormat" )
         
         updateTime()
     }
-    
-    function updateTime()
-    {    
+
+    function updateTime() {
         var format = "hh:mm"
         
         if (showSeconds) {
@@ -142,8 +141,9 @@ Item {
             ampm.opacity = defaultHalfTimeSuffixOpacity;      
             
             timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format )).toString().slice(0, -2)
-        }           
+        } 
     }
+    
             
     Text {
         id: time
