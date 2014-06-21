@@ -187,35 +187,51 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <layout class="QFormLayout" name="formLayout">
+       <layout class="QFormLayout" name="formLayout">       
+           
         <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Time zone</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="KTimeZoneComboBox" name="kcfg_timeZone"/>
+        </item>
+        
+        <item row="1" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
            <string>Date format:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="KLineEdit" name="kcfg_dateStringFormat"/>
+        <item row="1" column="1">
+         <widget class="KLineEdit" name="kcfg_dateStringFormat">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;This is a richtext field. You are able to write it like:&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;dddd&amp;lt;br/&amp;gt; d MMMM&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;or&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;dddd&amp;lt;span style='color:#f00'&amp;gt;d&amp;lt;/span&amp;gt; MMMM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
            <string>24h format</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="KCheckBox" name="kcfg_timeFormat"/>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
            <string>Show seconds</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="3" column="1">
          <widget class="KCheckBox" name="kcfg_showSeconds"/>
         </item>
        </layout>
@@ -250,6 +266,11 @@
    <class>KFontComboBox</class>
    <extends>KComboBox</extends>
    <header>kfontcombobox.h</header>
+  </customwidget>  
+  <customwidget>
+   <class>KTimeZoneComboBox</class>
+   <extends>KComboBox</extends>
+   <header>ktimezonecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
