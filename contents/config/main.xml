@@ -53,9 +53,5 @@
             <label>Text alignment</label>
             <default>0</default>
         </entry>
-        <entry name="timeZone" type="string">
-            <label>Time zone</label>
-            <default>Local</default>
-        </entry>
     </group>
 </kcfg>

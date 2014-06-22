@@ -22,9 +22,6 @@ import QtQuick 1.1
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
-// import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
-
-// import "../code/view.js" as MinimalisticClockView
 
 
 Item {
@@ -46,7 +43,6 @@ Item {
     property int fontStyleName: 0
     property string fontStyleColor: "black"
     property string textAlignment: "AlignHCenter"
-//     property variant view: MinimalisticClockView.MinimalisticClockView(mainWindow)
           
     Component.onCompleted: {    
         plasmoid.setBackgroundHints( 0 );
@@ -159,15 +155,7 @@ Item {
             top: parent.top;
         }
     }    
-    
-    
-    /*MobileComponents.TextEffects {
-        id: clockText
-        effect: MobileComponents.TextEffects.TexturedText
-        pixelSize: timeStringFontSize
-        text: timeString
-    }*/
-    
+        
     Text {
         id: ampm
         font.family:textFont
