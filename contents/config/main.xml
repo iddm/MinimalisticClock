@@ -5,10 +5,6 @@
      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
     <kcfgfile name=""/>
     <group name="General">
-        <entry name="textFont" type="String">
-            <label>Font</label>
-            <default>Arial</default>
-        </entry>
         <entry name="textColor" type="String">
             <label>Text color</label>
             <default>white</default>
@@ -21,17 +17,17 @@
             <label>Show seconds</label>
             <default>false</default>
         </entry>
-        <entry name="timeStringFontSize" type="int">
-            <label>Time string font size</label>
-            <default>72</default>
+        <entry name="timeStringFont" type="string">
+            <label>Time string font</label>
+            <default>Arial,72,-1,75,0,0,0,0,0</default>
         </entry>
-        <entry name="ampmStringFontSize" type="int">
-            <label>AM/PM suffix font size</label>
-            <default>48</default>
+        <entry name="ampmStringFont" type="string">
+            <label>AM/PM suffix font</label>
+            <default>Arial,48</default>
         </entry>
-        <entry name="dateStringFontSize" type="int">
-            <label>Date string font size</label>
-            <default>32</default>
+        <entry name="dateStringFont" type="String">
+            <label>Date string font</label>
+            <default>Arial,32</default>
         </entry>
         <entry name="dateStringFormat" type="string">
             <label>Date string format</label>
@@ -52,6 +48,18 @@
         <entry name="textAlignment" type="int">
             <label>Text alignment</label>
             <default>0</default>
+        </entry>
+        <entry name="timeZone" type="String">
+            <label>Time zone</label>
+            <default>Local</default>
+        </entry>
+        <entry name="timeZoneFont" type="string">
+            <label>TODO</label>
+            <default>Arial,32</default>
+        </entry>
+        <entry name="timeZoneVisibility" type="bool">
+            <label>TODO</label>
+            <default>false</default>
         </entry>
     </group>
 </kcfg>

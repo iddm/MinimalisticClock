@@ -6,15 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>243</width>
-    <height>453</height>
+    <width>350</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>350</width>
+    <height>502</height>
+   </size>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -58,30 +64,13 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Font:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="KFontComboBox" name="kcfg_textFont">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>Text color:</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="1" column="1">
          <widget class="KColorCombo" name="kcfg_textColor">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -91,35 +80,45 @@
           </property>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Time font:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="KFontRequester" name="kcfg_timeStringFont" native="true"/>
+        </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Time font size:</string>
+           <string>AM/PM font:</string>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="KLineEdit" name="kcfg_timeStringFontSize"/>
+         <widget class="KFontRequester" name="kcfg_ampmStringFont" native="true"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>AM/PM font size:</string>
+           <string>Date font:</string>
           </property>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="KLineEdit" name="kcfg_ampmStringFontSize"/>
+         <widget class="KFontRequester" name="kcfg_dateStringFont" native="true"/>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Date font size:</string>
+           <string>Time zone font:</string>
           </property>
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="KLineEdit" name="kcfg_dateStringFontSize"/>
+         <widget class="KFontRequester" name="kcfg_timeZoneFont" native="true"/>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label">
@@ -225,6 +224,16 @@
         <item row="2" column="1">
          <widget class="KCheckBox" name="kcfg_showSeconds"/>
         </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Show time zone</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="KCheckBox" name="kcfg_timeZoneVisibility"/>
+        </item>
        </layout>
       </item>
      </layout>
@@ -275,11 +284,10 @@
         </property>
        </widget>
       </item>
-            
       <item>
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Minimalistic Clock 1.04</string>
+         <string>Minimalistic Clock 1.05</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -313,9 +321,9 @@
    <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>KFontComboBox</class>
-   <extends>KComboBox</extends>
-   <header>kfontcombobox.h</header>
+   <class>KFontRequester</class>
+   <extends>QWidget</extends>
+   <header>kfontrequester.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

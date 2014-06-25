@@ -21,6 +21,7 @@
 import QtQuick 1.1
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 
@@ -30,34 +31,37 @@ Item {
     property int minimumHeight: 160
     property int minimumWidth: 260
     property string textColor
-    property string textFont
     /*readonly*/ property string defaultDateStringFormat: "dddd, d MMMM"
     property string dateStringFormat: defaultDateStringFormat
     property bool fullTimeFormat: true
     property bool showSeconds: false
+    property bool timeZoneVisibility: false
     property string timeString
-    property int timeStringFontSize: 72
-    property int ampmStringFontSize: 48
-    property int dateStringFontSize: 32
+    property string timeStringFont
+    property string ampmStringFont
+    property string dateStringFont
+    property string timeZoneFont
     property double defaultHalfTimeSuffixOpacity: 0.5
+    property double defaultTimeZoneTextOpacity: 0.5
     property int fontStyleName: 0
     property string fontStyleColor: "black"
     property string textAlignment: "AlignHCenter"
+    property string connectedSource: "Local"
           
     Component.onCompleted: {    
         plasmoid.setBackgroundHints( 0 );
         plasmoid.addEventListener( 'ConfigChanged', configChanged ); 
-            
+                    
         configChanged();
     }
         
     function configChanged() {    
         textColor = plasmoid.readConfig( "textColor" )
-        textFont = plasmoid.readConfig( "textFont" )
         
-        timeStringFontSize = plasmoid.readConfig( "timeStringFontSize" )   
-        ampmStringFontSize = plasmoid.readConfig( "ampmStringFontSize" )   
-        dateStringFontSize = plasmoid.readConfig( "dateStringFontSize" )   
+        timeStringFont = plasmoid.readConfig( "timeStringFont" )   
+        ampmStringFont = plasmoid.readConfig( "ampmStringFont" )   
+        dateStringFont = plasmoid.readConfig( "dateStringFont" )   
+        timeZoneFont = plasmoid.readConfig( "timeZoneFont" )   
         dateStringFormat = plasmoid.readConfig( "dateStringFormat" )  
         fontStyleName = plasmoid.readConfig( "fontStyleName" ) 
         fontStyleColor = plasmoid.readConfig( "fontStyleColor" ) 
@@ -118,6 +122,13 @@ Item {
     function updateTimeFormat() {
         showSeconds = plasmoid.readConfig( "showSeconds" )
         fullTimeFormat = plasmoid.readConfig( "timeFormat" )
+        timeZoneVisibility = plasmoid.readConfig( "timeZoneVisibility" ) 
+        
+        if (timeZoneVisibility) {
+            timeZone.opacity = defaultTimeZoneTextOpacity
+        } else {
+            timeZone.opacity = 0
+        }
         
         updateTime()
     }
@@ -130,39 +141,66 @@ Item {
         }
         
         if (fullTimeFormat) {
-            timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format ))
+            timeString = (Qt.formatTime( dataSource.data[connectedSource]["Time"], format ))
             ampm.opacity = 0;
             
         } else {
             format += "ap";
             ampm.opacity = defaultHalfTimeSuffixOpacity;      
             
-            timeString = (Qt.formatTime( dataSource.data["Local"]["Time"], format )).toString().slice(0, -2)
+            timeString = (Qt.formatTime( dataSource.data[connectedSource]["Time"], format )).toString().slice(0, -2)
         } 
     }
     
-            
+    
+    PlasmaComponents.SelectionDialog {
+        id: selectionDialog
+        
+        titleText: "Time zone"
+        
+        visible: false
+        model: dataSource.sources
+        
+        anchors.top: date.bottom
+        onSelectedIndexChanged: {
+            connectedSource = selectionDialog.model[selectionDialog.selectedIndex]
+        }
+        
+//         onButtonClicked: {
+//             selectionDialog.selectedIndex = index
+//             
+//             timeString = index
+//         
+//             selectionDialog.close()
+//         }
+    }
+    
+    MouseArea {
+        anchors.fill: parent
+        
+        onDoubleClicked: {
+            selectionDialog.open()
+        }
+    }
+    
     Text {
         id: time
-        font.family:textFont
-        font.bold: true
+        font:timeStringFont
         color: textColor
-        font.pointSize: timeStringFontSize
         text : timeString
         style: fontStyleName
         styleColor: fontStyleColor
         anchors {
             top: parent.top;
         }
-    }    
+    }   
         
     Text {
         id: ampm
-        font.family:textFont
+        font: ampmStringFont
         opacity: defaultHalfTimeSuffixOpacity
         color: textColor
-        font.pointSize: ampmStringFontSize
-        text : Qt.formatTime( dataSource.data["Local"]["Time"],"ap" )
+        text : Qt.formatTime( dataSource.data[connectedSource]["Time"],"ap" )
         style: fontStyleName
         styleColor: fontStyleColor
         horizontalAlignment: textAlignment
@@ -173,10 +211,9 @@ Item {
         
     Text {
         id: date
-        font.family:textFont
+        font: dateStringFont
         color: textColor
-        font.pointSize: dateStringFontSize
-        text : Qt.formatDate( dataSource.data["Local"]["Date"], dateStringFormat )
+        text : Qt.formatDate( dataSource.data[connectedSource]["Date"], dateStringFormat )
         style: fontStyleName
         styleColor: fontStyleColor
         horizontalAlignment: textAlignment
@@ -189,11 +226,30 @@ Item {
             right: parent.right;
         }
     }
+    
+    Text {
+        id: timeZone
+        font: timeZoneFont
+        color: textColor
+        text : connectedSource
+        style: fontStyleName
+        styleColor: fontStyleColor
+        horizontalAlignment: textAlignment
+        textFormat: Text.RichText
+        opacity: defaultTimeZoneTextOpacity
+        
+        wrapMode: Text.WordWrap
+        anchors {
+            top: date.bottom;
+            left: parent.left;
+            right: parent.right;
+        }
+    }
 
     PlasmaCore.DataSource {
         id: dataSource
         engine: "time"
-        connectedSources: ["Local"]
+        connectedSources: connectedSource
         interval: 500
         
         onNewData: {
