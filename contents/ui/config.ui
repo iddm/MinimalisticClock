@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>502</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preffered" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -19,7 +19,7 @@
   <property name="maximumSize">
    <size>
     <width>350</width>
-    <height>502</height>
+    <height>510</height>
    </size>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -88,7 +88,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="KFontRequester" name="kcfg_timeStringFont" native="true"/>
+         <widget class="KFontRequester" name="kcfg_timeStringFont"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label">
@@ -98,7 +98,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="KFontRequester" name="kcfg_ampmStringFont" native="true"/>
+         <widget class="KFontRequester" name="kcfg_ampmStringFont"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label">
@@ -108,7 +108,7 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="KFontRequester" name="kcfg_dateStringFont" native="true"/>
+         <widget class="KFontRequester" name="kcfg_dateStringFont"/>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label">
@@ -287,7 +287,7 @@
       <item>
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Minimalistic Clock 1.05</string>
+         <string>Minimalistic Clock 1.07</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

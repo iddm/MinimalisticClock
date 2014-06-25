@@ -24,6 +24,8 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "."
+
 
 Item {
 
@@ -46,11 +48,14 @@ Item {
     property int fontStyleName: 0
     property string fontStyleColor: "black"
     property string textAlignment: "AlignHCenter"
-    property string connectedSource: "Local"
-          
+    property string connectedSource
+    
+    
     Component.onCompleted: {    
         plasmoid.setBackgroundHints( 0 );
-        plasmoid.addEventListener( 'ConfigChanged', configChanged ); 
+        plasmoid.addEventListener( 'ConfigChanged', configChanged );
+        
+        connectedSource = plasmoid.readConfig("timeZone")
                     
         configChanged();
     }
@@ -124,16 +129,10 @@ Item {
         fullTimeFormat = plasmoid.readConfig( "timeFormat" )
         timeZoneVisibility = plasmoid.readConfig( "timeZoneVisibility" ) 
         
-        if (timeZoneVisibility) {
-            timeZone.opacity = defaultTimeZoneTextOpacity
-        } else {
-            timeZone.opacity = 0
-        }
-        
         updateTime()
     }
 
-    function updateTime() {
+    function updateTime() {        
         var format = "hh:mm"
         
         if (showSeconds) {
@@ -152,35 +151,27 @@ Item {
         } 
     }
     
-    
-    PlasmaComponents.SelectionDialog {
-        id: selectionDialog
         
-        titleText: "Time zone"
-        
-        visible: false
-        model: dataSource.sources
-        
-        anchors.top: date.bottom
-        onSelectedIndexChanged: {
-            connectedSource = selectionDialog.model[selectionDialog.selectedIndex]
-        }
-        
-//         onButtonClicked: {
-//             selectionDialog.selectedIndex = index
-//             
-//             timeString = index
-//         
-//             selectionDialog.close()
-//         }
-    }
-    
     MouseArea {
         anchors.fill: parent
         
         onDoubleClicked: {
             selectionDialog.open()
         }
+    }
+    
+    SelectionDialog {
+        id: selectionDialog
+        
+        onItemSelected: {
+            connectedSource = modelItem
+//             connectedSource = dataSource.sources[modelItem]
+            plasmoid.writeConfig("timeZone", connectedSource);
+            timeString = ""
+            date.text = "text4: " + modelItem
+        }
+        
+        anchors.top: date.bottom
     }
     
     Text {
@@ -194,7 +185,7 @@ Item {
             top: parent.top;
         }
     }   
-        
+            
     Text {
         id: ampm
         font: ampmStringFont
@@ -230,8 +221,9 @@ Item {
     Text {
         id: timeZone
         font: timeZoneFont
+        visible: timeZoneVisibility
         color: textColor
-        text : connectedSource
+        text : dataSource.data[connectedSource]["Timezone City"]
         style: fontStyleName
         styleColor: fontStyleColor
         horizontalAlignment: textAlignment
@@ -255,5 +247,5 @@ Item {
         onNewData: {
             updateTime()
         }
-    }
+    }    
 }
