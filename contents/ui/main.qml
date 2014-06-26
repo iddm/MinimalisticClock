@@ -165,10 +165,8 @@ Item {
         
         onItemSelected: {
             connectedSource = modelItem
-//             connectedSource = dataSource.sources[modelItem]
             plasmoid.writeConfig("timeZone", connectedSource);
             timeString = ""
-            date.text = "text4: " + modelItem
         }
         
         anchors.top: date.bottom
@@ -223,7 +221,7 @@ Item {
         font: timeZoneFont
         visible: timeZoneVisibility
         color: textColor
-        text : dataSource.data[connectedSource]["Timezone City"]
+        text : i18n(dataSource.data[connectedSource]["Timezone City"])
         style: fontStyleName
         styleColor: fontStyleColor
         horizontalAlignment: textAlignment

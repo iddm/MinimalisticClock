@@ -60,7 +60,21 @@ PlasmaComponents.CommonDialog {
                 
                 onDoubleClicked: {
                     selectedIndex = index
-                    root.itemSelected(model["Timezone"])
+//                     var timeZoneObject = timeZoneDataModel.get(index)
+//                     var modelItem = timeZoneDataSource.data[timeZoneObject]
+                    var source;
+                    
+                    for (var i = 0; i < timeZoneDataSource.sources.length; i++) {
+                        if (timeZoneDataSource.data[timeZoneDataSource.sources[i]]["Timezone"] == model["Timezone"]) {
+                            source = timeZoneDataSource.sources[i];
+                            
+                            break;
+                        }
+                    }
+
+//                     var modelItem = timeZoneDataSource.sources[index]
+//                     root.itemSelected(timeZoneObject["Timezone"])            
+                    root.itemSelected(source)
                     root.accept()
                 }
                 
@@ -138,6 +152,16 @@ PlasmaComponents.CommonDialog {
                     }
                 }    
             }
+//             model: PlasmaCore.DataModel {
+//                 id: timeZoneDataModel
+// 
+//                 dataSource: PlasmaCore.DataSource {
+//                     id: timeZoneDataSource
+//                     engine: "time"
+//                     connectedSources: sources
+//                     interval: 0
+//                 } 
+//             }
         }
 
         PlasmaComponents.ScrollBar {
