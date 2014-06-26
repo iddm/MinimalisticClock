@@ -1,5 +1,5 @@
 /*
-    Copyright 2013 Anant Kamath <kamathanant@gmail.com>
+    Copyright 2014 Victor Polevoy <vityatheboss@gmail.com>
     
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public

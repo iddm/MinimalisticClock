@@ -287,7 +287,7 @@
       <item>
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Minimalistic Clock 1.07</string>
+         <string>Minimalistic Clock 1.08</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

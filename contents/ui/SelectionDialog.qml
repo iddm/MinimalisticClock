@@ -152,23 +152,6 @@ PlasmaComponents.CommonDialog {
                     }
                 }    
             }
-//             model: PlasmaCore.DataModel {
-//                 id: timeZoneDataModel
-// 
-//                 dataSource: PlasmaCore.DataSource {
-//                     id: timeZoneDataSource
-//                     engine: "time"
-//                     connectedSources: sources
-//                     interval: 0
-//                 } 
-//             }
-        }
-
-        PlasmaComponents.ScrollBar {
-            id: scrollBar
-            flickableItem: listView
-            visible: listView.contentHeight > contentItem.height
-            anchors { top: listView.top; right: contentItem.right }
         }
     }
 
